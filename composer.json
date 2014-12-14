@@ -1,0 +1,29 @@
+{
+    "name": "umpirsky/centipede",
+    "type": "library",
+    "description": "The Simplest automated testing tool on Earth.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Saša Stamenković",
+            "email": "umpirsky@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "~5.4",
+        "symfony/console": "~2.6",
+        "umpirsky/centipede-crawler": "dev-master"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "bin": [
+        "bin/centipede"
+    ],
+    "autoload": {
+        "psr-0": { "Centipede\\": "src/" }
+    }
+}
