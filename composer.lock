@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3eec56dde26ee9405c7c5c51ec27525a",
+    "hash": "45d26433f810016435139cc585a8c681",
     "packages": [
         {
             "name": "fabpot/goutte",
@@ -395,12 +395,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/umpirsky/centipede-crawler.git",
-                "reference": "5a37dae9f7130442120e7f5e87b4c083abe19344"
+                "reference": "0dc413228e1bdcc853a0a29ccb60dcf1ef905096"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/umpirsky/centipede-crawler/zipball/5a37dae9f7130442120e7f5e87b4c083abe19344",
-                "reference": "5a37dae9f7130442120e7f5e87b4c083abe19344",
+                "url": "https://api.github.com/repos/umpirsky/centipede-crawler/zipball/0dc413228e1bdcc853a0a29ccb60dcf1ef905096",
+                "reference": "0dc413228e1bdcc853a0a29ccb60dcf1ef905096",
                 "shasum": ""
             },
             "require": {
@@ -424,7 +424,7 @@
                 }
             ],
             "description": "Crawls all unique links.",
-            "time": "2014-12-13 19:04:42"
+            "time": "2014-12-14 20:10:33"
         }
     ],
     "packages-dev": [
