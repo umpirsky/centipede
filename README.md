@@ -11,3 +11,7 @@ What is the simplest test you can think of for your web application? Maybe just 
 ```
 ./bin/centipede run https://github.com
 ```
+
+## Screenshot
+
+![Screenshot of Centipede](http://i.imgur.com/YQcj2dp.png "Screenshot of Centipede")
