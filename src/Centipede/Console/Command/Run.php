@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\BrowserKit\Response;
 use Centipede\Crawler;
+use Symfony\Component\Yaml\Yaml;
 
 class Run extends Command
 {
@@ -25,7 +26,7 @@ class Run extends Command
                 new InputOption('auth-method', null, InputOption::VALUE_OPTIONAL, 'Authentication method'),
                 new InputOption('session-name', null, InputOption::VALUE_OPTIONAL, 'Session name', 'PHPSESSID'),
                 new InputOption('session-id', null, InputOption::VALUE_OPTIONAL, 'Session id'),
-                new InputOption('ignore-url', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Ignore url'),
+                new InputOption('config', 'c', InputOption::VALUE_OPTIONAL, 'load centipede yaml config'),
             ])
             ->setDescription('Runs specifications')
         ;
@@ -48,12 +49,12 @@ class Run extends Command
             $authenticator
         );
 
-        $excludeUrls = $input->getOption('ignore-url');
+        $config = $this->getConfig($input->getOption('config'));
 
-        $crawler->crawl(function ($url, Response $response) use ($excludeUrls, $output) {
+        $crawler->crawl(function ($url, Response $response) use ($config, $output) {
             $tag = 'info';
 
-            if (in_array($url, $excludeUrls)) {
+            if (in_array($url, $config['ignore'])) {
                 return;
             }
 
@@ -72,5 +73,22 @@ class Run extends Command
         });
 
         return $this->exitCode;
+    }
+
+    protected function getConfig($configFilePath)
+    {
+        $config = array();
+
+        if (null !== $configFilePath) {
+            if (!file_exists($configFilePath)) {
+                throw new \Exception('Config file not found');
+            }
+
+            $parsedContent = (new Yaml())->parse(file_get_contents($configFilePath));
+
+            $config['ignore'] = isset($parsedContent['ignore']) ? $parsedContent['ignore'] : array();
+        }
+
+        return $config;
     }
 }

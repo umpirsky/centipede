@@ -12,7 +12,8 @@
     "require": {
         "php": "~5.4",
         "symfony/console": "~2.6",
-        "umpirsky/centipede-crawler": "dev-master"
+        "umpirsky/centipede-crawler": "dev-master",
+        "symfony/yaml": "~2.3"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.0"
