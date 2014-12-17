@@ -45,12 +45,17 @@ class Run extends Command
         $crawler = new Crawler(
             $input->getArgument('url'),
             $input->getArgument('depth'),
-            $input->getOption('ignore-url'),
             $authenticator
         );
 
-        $crawler->crawl(function ($url, Response $response) use ($output) {
+        $excludeUrls = $input->getOption('ignore-url');
+
+        $crawler->crawl(function ($url, Response $response) use ($excludeUrls, $output) {
             $tag = 'info';
+
+            if (in_array($url, $excludeUrls)) {
+                return;
+            }
 
             if (200 != $response->getStatus()) {
                 $this->exitCode = 1;
