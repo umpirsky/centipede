@@ -64,7 +64,6 @@ class Run extends Command
                 $tag,
                 $url
             ));
-
         });
 
         return $this->exitCode;
