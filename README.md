@@ -1,6 +1,6 @@
 # Centipede
 
-The Simplest automated testing tool on Earth.
+The simplest automated testing tool on Earth.
 
 ## Idea
 
