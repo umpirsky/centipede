@@ -27,7 +27,7 @@ class Run extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        (new Crawler($input->getArgument('url')))->crawl(function ($url, Response $response) use ($output) {
+        (new Crawler($input->getArgument('url'), $input->getArgument('depth')))->crawl(function ($url, Response $response) use ($output) {
             $tag = 'info';
             if (200 != $response->getStatus()) {
                 $this->exitCode = 1;
