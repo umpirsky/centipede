@@ -11,12 +11,13 @@
     ],
     "require": {
         "php": "~5.4",
-        "symfony/console": "~2.6",
-        "umpirsky/centipede-crawler": "dev-master"
+        "symfony/console": "~2",
+        "umpirsky/centipede-crawler": "0.1.*"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.0"
     },
+    "minimum-stability": "dev",
     "config": {
         "bin-dir": "bin"
     },
