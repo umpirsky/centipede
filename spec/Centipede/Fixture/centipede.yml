@@ -1,0 +1,13 @@
+rules:
+    foo:
+        url: /foo
+        status: 200
+        text: Foo
+    bar:
+        url: https://github.com/bar
+        status: 200
+        text: Bar
+
+ignore:
+    - /ignore
+    - https://github.com/ignored
