@@ -9,7 +9,7 @@ What is the simplest test you can think of for your web application? Maybe just 
 ## Usage
 
 ```
-./bin/centipede run https://github.com
+./bin/centipede https://github.com
 ```
 
 ## Screenshot
