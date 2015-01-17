@@ -12,6 +12,7 @@
     "require": {
         "php": "~5.4",
         "symfony/console": "~2",
+        "symfony/property-access": "~2",
         "umpirsky/centipede-crawler": "0.1.*"
     },
     "require-dev": {

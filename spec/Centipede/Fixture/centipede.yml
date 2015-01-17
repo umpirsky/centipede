@@ -1,6 +1,6 @@
 rules:
     foo:
-        url: /foo
+        url: https://github.com/foo
         status: 200
         text: Foo
     bar:
@@ -9,5 +9,5 @@ rules:
         text: Bar
 
 ignore:
-    - /ignore
+    - https://github.com/ignore
     - https://github.com/ignored

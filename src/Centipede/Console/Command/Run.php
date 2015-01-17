@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use GuzzleHttp\Message\FutureResponse;
 use Centipede\Crawler;
+use Centipede\Configuration\ConfigurationFactory;
 
 class Run extends Command
 {
@@ -27,9 +28,15 @@ class Run extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        (new Crawler($input->getArgument('url'), $input->getArgument('depth')))->crawl(function ($url, FutureResponse $response) use ($output) {
+        $configuration = ConfigurationFactory::create(
+            rtrim(getcwd(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'centipede.yml'
+        );
+
+        (new Crawler($input->getArgument('url'), $input->getArgument('depth')))->crawl(function ($url, FutureResponse $response) use ($configuration, $output) {
+            $rule = $configuration->getRule($url);
+
             $tag = 'info';
-            if (200 != $response->getStatusCode()) {
+            if ($rule->getStatus() != $response->getStatusCode()) {
                 $this->exitCode = 1;
                 $tag = 'error';
             }
