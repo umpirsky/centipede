@@ -2,11 +2,11 @@
 
 namespace Centipede\Console\Command;
 
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use GuzzleHttp\Message\ResponseInterface;
 use Centipede\Crawler;
 
 class Run extends Command
@@ -27,9 +27,9 @@ class Run extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        (new Crawler($input->getArgument('url'), $input->getArgument('depth')))->crawl(function ($url, Response $response) use ($output) {
+        (new Crawler($input->getArgument('url'), $input->getArgument('depth')))->crawl(function ($url, ResponseInterface $response) use ($output) {
             $tag = 'info';
-            if (200 != $response->getStatus()) {
+            if (200 != $response->getStatusCode()) {
                 $this->exitCode = 1;
                 $tag = 'error';
             }
@@ -37,7 +37,7 @@ class Run extends Command
             $output->writeln(sprintf(
                 '<%s>%d</%s> %s',
                 $tag,
-                $response->getStatus(),
+                $response->getStatusCode(),
                 $tag,
                 $url
             ));
