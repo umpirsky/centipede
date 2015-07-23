@@ -2,6 +2,7 @@
 
 namespace Centipede\Console\Command;
 
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,6 +13,49 @@ use Centipede\Crawler;
 class Run extends Command
 {
     private $exitCode = 0;
+
+    /**
+     * @var OutputInterface
+     */
+    private $output;
+
+    /**
+     * @var integer
+     */
+    private $depth;
+
+    /**
+     * @param string            $url
+     * @param ResponseInterface $response
+     * @param integer           $depth
+     */
+    public function handleResponse($url, ResponseInterface $response, $depth)
+    {
+        try {
+            $httpCode = $response->getStatusCode();
+        } catch (ClientException $e) {
+            $httpCode = $e->getResponse()->getStatusCode();
+        }
+
+        if ($httpCode < 300) {
+            $tag = 'info';
+        } elseif ($httpCode >= 300 && $httpCode < 400) {
+            $tag = 'comment';
+        } else {
+            $tag = 'error';
+        }
+
+        $depth = implode(' ', array_fill(0, ($this->depth - $depth), '>'));
+
+        $this->output->writeln(sprintf(
+            '<%s>%d</%s> %s %s',
+            $tag,
+            $httpCode,
+            $tag,
+            $depth,
+            $url
+        ));
+    }
 
     protected function configure()
     {
@@ -27,21 +71,11 @@ class Run extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        (new Crawler($input->getArgument('url'), $input->getArgument('depth')))->crawl(function ($url, ResponseInterface $response) use ($output) {
-            $tag = 'info';
-            if (200 != $response->getStatusCode()) {
-                $this->exitCode = 1;
-                $tag = 'error';
-            }
+        $this->output = $output;
 
-            $output->writeln(sprintf(
-                '<%s>%d</%s> %s',
-                $tag,
-                $response->getStatusCode(),
-                $tag,
-                $url
-            ));
-        });
+        $this->depth = $input->getArgument('depth');
+
+        (new Crawler($input->getArgument('url'), $this->depth))->crawl([$this, 'handleResponse']);
 
         return $this->exitCode;
     }
