@@ -31,11 +31,7 @@ class Run extends Command
      */
     public function handleResponse($url, ResponseInterface $response, $depth)
     {
-        try {
-            $httpCode = $response->getStatusCode();
-        } catch (ClientException $e) {
-            $httpCode = $e->getResponse()->getStatusCode();
-        }
+        $httpCode = $response->getStatusCode();
 
         if ($httpCode < 300) {
             $tag = 'info';
@@ -45,7 +41,7 @@ class Run extends Command
             $tag = 'error';
         }
 
-        $depth = '('.str_pad($this->depth - $depth + 1, strlen($this->depth), ' ', STR_PAD_LEFT).')';
+        $depth = '('.str_pad($this->depth - $depth, strlen($this->depth), ' ', STR_PAD_LEFT).')';
 
         $this->output->writeln(sprintf(
             '<%s>%d</%s> %s %s',
