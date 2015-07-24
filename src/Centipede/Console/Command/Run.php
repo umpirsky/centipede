@@ -45,7 +45,7 @@ class Run extends Command
             $tag = 'error';
         }
 
-        $depth = implode(' ', array_fill(0, ($this->depth - $depth), '>'));
+        $depth = '('.str_pad($this->depth - $depth + 1, strlen($this->depth), ' ', STR_PAD_LEFT).')';
 
         $this->output->writeln(sprintf(
             '<%s>%d</%s> %s %s',
